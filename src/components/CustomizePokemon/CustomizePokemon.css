@@ -1,0 +1,136 @@
+.customize-pokemon-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.selected-pokemon {
+  text-align: center;
+}
+
+.selected-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.pokemon-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.quantity-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quantity-button:hover {
+  background-color: #0056b3;
+}
+
+.accessories-section {
+  margin-top: 20px;
+}
+
+.accessory-options {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.accessory-options label {
+  margin-right: 10px;
+}
+
+.accessory-options img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.accessory-options img:hover {
+  transform: scale(1.1);
+}
+
+.customize-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.customize-button:hover {
+  background-color: #218838;
+}
+
+.evolution-section {
+  margin-top: 20px;
+}
+
+.evolution-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.evolution-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.evolution-button img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.evolution-button.selected {
+  transform: scale(1.1);
+}
+
+.preview-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.preview-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.message {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #dc3545;
+}

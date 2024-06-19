@@ -1,0 +1,102 @@
+/* profile.css */
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.profile-page h1,
+.profile-page h2 {
+  color: #333;
+}
+
+.profile-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-info img {
+  border-radius: 50%;
+  width: 150px; /* Adjust as needed */
+  height: 150px; /* Ensure the profile image has a consistent size */
+  margin-bottom: 10px;
+}
+
+.previous-purchases {
+  width: 100%;
+  padding: 0;
+}
+
+.purchase-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.purchase-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex; /* Ensure items are displayed in a row */
+  align-items: center; /* Center align items vertically */
+}
+
+.purchase-image {
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.purchase-details {
+  flex-grow: 1; /* Allow details to take remaining space */
+}
+
+.quantity {
+  font-weight: bold;
+  margin-left: 10px; /* Adjust as needed */
+}
+
+.accessories {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.accessory-image {
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+  margin-left: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .purchase-item {
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: flex-start; /* Left align items */
+  }
+
+  .purchase-image {
+    width: 80px; /* Adjust size as needed */
+    height: 80px; /* Adjust size as needed */
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .accessory-image {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    margin-left: 5px;
+  }
+
+  .purchase-details,
+  .quantity {
+    margin: 0;
+  }
+}

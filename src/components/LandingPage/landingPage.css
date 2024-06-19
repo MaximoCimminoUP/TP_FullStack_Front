@@ -1,0 +1,102 @@
+.bg-gray-200 {
+  background-color: #f3f4f6; /* Light gray background */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Add padding for better spacing */
+}
+
+.container {
+  width: 100%;
+  max-width: 600px; /* Limit container width for better readability */
+  text-align: center; /* Center text within the container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-container {
+  margin-bottom: 20px;
+}
+
+.logo-container img {
+  width: 100%; /* Ensure logo scales with container */
+  max-width: 200px; /* Limit maximum width for logo */
+}
+
+.welcome-text {
+  font-size: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f3f4f6; /* Light gray background */
+  padding: 10px; /* Add padding to create separation */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.customize-button {
+  background-color: #fbbf24;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.customize-button:hover {
+  background-color: #f59e0b;
+}
+
+.ranking-container {
+  background-color: #e3350d; /* Red color similar to a pokeball */
+  padding: 20px;
+  margin-bottom: 20px; /* Space between ranking and pokemon gallery */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.pokemon-rank-text {
+  font-size: 20px;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.pokemon-gallery-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.pokemon-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns in a row */
+  gap: 20px;
+  width: 100%; /* Ensure the gallery takes full container width */
+}
+
+.pokemon-image {
+  width: 100%;
+  border-radius: 8px; /* Rounded corners for pokemon images */
+}
+
+@media (max-width: 768px) {
+  .logo-container img {
+    max-width: 150px; /* Adjust logo size for smaller screens */
+  }
+
+  .welcome-text {
+    font-size: 20px;
+  }
+
+  .customize-button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .pokemon-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust grid for smaller screens */
+  }
+}

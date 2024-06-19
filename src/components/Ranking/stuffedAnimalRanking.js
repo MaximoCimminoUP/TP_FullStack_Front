@@ -1,31 +1,41 @@
 import React, { useState, useEffect } from 'react';
 
-const stuffedAnimalRanking= () => {
+const stuffedAnimalRanking = () => {
   const [ranking, setRanking] = useState([]);
 
   useEffect(() => {
     const fetchRanking = async () => {
       try {
-        const response = await fetch('http://localhost:8050/stuffedAnimal-ranking');
+        const response = await fetch('http://localhost:8080/PokemonRank');
         const data = await response.json();
-        setRanking(data.plushieRanking);
+        
+        // Check if data.plushieRanking is defined before setting state
+        if (data && data.plushieRanking) {
+          setRanking(data.plushieRanking);
+        } else {
+          console.error('Error: No pokemon ranking data received.');
+        }
       } catch (error) {
-        console.error('Error fetching stuffed animal ranking:', error);
+        console.error('Error fetching pokemon ranking:', error);
       }
     };
-    fetchRanking();
+    fetchRanking(); 
   }, []);
 
   return (
     <div className="stuffedAnimalRanking">
       <h2>Plushie Ranking</h2>
       <div className="podium">
-        {ranking.slice(0, 3).map((item, index) => (
-          <div key={index} className={`podium-item podium-item-${index + 1}`}>
-            <h3>{item._id}</h3>
-            <p>Purchases: {item.count}</p>
-          </div>
-        ))}
+        {ranking.length > 0 ? (
+          ranking.slice(0, 3).map((item, index) => (
+            <div key={index} className={`podium-item podium-item-${index + 1}`}>
+              <h3>{item._id}</h3>
+              <p>Purchases: {item.count}</p>
+            </div>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   );
