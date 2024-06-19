@@ -18,7 +18,9 @@ const CustomizePokemon = () => {
   useEffect(() => {
     fetchPokemon();
   }, [name]);
-console.log('The token in the cookies is:',cookies.token);
+
+  console.log('The token in the cookies is:', cookies.token);
+
   const fetchPokemon = async () => {
     try {
       const response = await fetch(`http://localhost:8080/pokemon/${name}`);
@@ -28,7 +30,6 @@ console.log('The token in the cookies is:',cookies.token);
         setSelectedPokemon(data);
 
         if (!isPokemonInEvolutionChain(name, evolutionChain)) {
-        
           const fullEvolutionChain = [data.name, ...data.evolutions.filter(evo => evo !== data.name)];
           setEvolutionChain(fullEvolutionChain);
         }
@@ -66,18 +67,21 @@ console.log('The token in the cookies is:',cookies.token);
   };
 
   const handleShinyChange = () => {
-    const newShinyState = !isShiny;
-    setIsShiny(newShinyState);
-    updatePreviewImage(name, newShinyState);
+    if (selectedPokemon.shinyImage) {
+      const newShinyState = !isShiny;
+      setIsShiny(newShinyState);
+      updatePreviewImage(name, newShinyState);
+    }
   };
 
   const updatePreviewImage = (name, isShiny) => {
     let imageUrl = `/images/pokemon/${name}`;
-    if (isShiny) {
+    if (isShiny && selectedPokemon.shinyImage) {
       imageUrl += '_shiny';
     }
     setPreviewImage(`${imageUrl}.png`);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -89,150 +93,151 @@ console.log('The token in the cookies is:',cookies.token);
         },
         body: JSON.stringify({
           type: selectedPokemon.name,
-          evolutions: evolutionChain, 
+          evolutions: evolutionChain,
           image: selectedPokemon.image,
-          shinyImage: isShiny ? selectedPokemon.shinyImage : selectedPokemon.image, 
-          isShiny: isShiny,
+          shinyImage: isShiny && selectedPokemon.shinyImage ? selectedPokemon.shinyImage : selectedPokemon.image,
+          isShiny: isShiny && selectedPokemon.shinyImage ? isShiny : false,
           accessories: selectedAccessories.map(accessory => ({
             name: accessory,
             image: `/images/accessories/${accessory}.png`
           })),
           quantity: quantity,
-          isBaseEvolution: selectedPokemon.isBaseEvolution 
+          isBaseEvolution: selectedPokemon.isBaseEvolution
         })
       });
-  
+
       if (!response.ok) {
         const data = await response.json();
         setMessage(data.error || 'Error customizing Pokémon');
         return;
       }
-  
+
       const data = await response.json();
       setMessage('Pokémon customized successfully!');
       console.log('Customized Pokémon:', data.pokemon);
-  
+
       // Optionally, fetch updated cart data here if needed
       const cartResponse = await fetch('http://localhost:8080/api/cart', {
         headers: {
           'Authorization': `Bearer ${cookies.token}`
         }
       });
-  
+
       if (!cartResponse.ok) {
         const errorData = await cartResponse.json();
         console.error('Error fetching cart:', errorData.error);
         return;
       }
-  
+
       const cartData = await cartResponse.json();
       console.log('Updated Cart Data:', cartData);
-  
+
     } catch (error) {
       console.error('Error customizing Pokémon:', error);
       setMessage('Internal server error');
     }
   };
-  
 
   const handleQuantityChange = (e) => {
     let value = parseInt(e.target.value);
     value = isNaN(value) ? 1 : value;
-    value = Math.min(Math.max(1, value), 10); 
+    value = Math.min(Math.max(1, value), 10); // Clamp value between 1 and 10
     setQuantity(value);
   };
 
   return (
     <div className="customize-pokemon-container">
-    <div className="pokemon-details">
-      <div className="selected-pokemon">
-        {selectedPokemon && (
-          <>
-            <img src={previewImage} alt="Pokémon Preview" className="preview-image" />
-            <div className="pokemon-name">{selectedPokemon.name}</div>
-            <input
+      <div className="pokemon-details">
+        <div className="selected-pokemon">
+          {selectedPokemon && (
+            <>
+              <img src={previewImage} alt="Pokémon Preview" className="preview-image" />
+              <div className="pokemon-name">{selectedPokemon.name}</div>
+              <input
                 type="number"
                 value={quantity}
                 onChange={handleQuantityChange}
                 min={1}
                 max={10}
               />
+              {selectedPokemon.shinyImage && (
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isShiny}
+                    onChange={handleShinyChange}
+                  />
+                  Shiny Version
+                </label>
+              )}
+            </>
+          )}
+        </div>
+        <div className="accessories-section">
+          <h3>Accessories</h3>
+          <div className="accessory-options">
             <label>
               <input
                 type="checkbox"
-                checked={isShiny}
-                onChange={handleShinyChange}
+                value="pokeball"
+                checked={selectedAccessories.includes('pokeball')}
+                onChange={handleAccessoryChange}
               />
-              Shiny Version
+              <img src="/images/accessories/pokeball.png" alt="Pokeball" className="accessory-image" />
             </label>
-          </>
-        )}
-      </div>
-      <div className="accessories-section">
-        <h3>Accessories</h3>
-        <div className="accessory-options">
-          <label>
-            <input
-              type="checkbox"
-              value="pokeball"
-              checked={selectedAccessories.includes('pokeball')}
-              onChange={handleAccessoryChange}
-            />
-            <img src="/images/accessories/pokeball.png" alt="Pokeball" className="accessory-image" />
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              value="cap"
-              checked={selectedAccessories.includes('cap')}
-              onChange={handleAccessoryChange}
-            />
-            <img src="/images/accessories/cap.png" alt="Cap" className="accessory-image" />
-          </label>
+            <label>
+              <input
+                type="checkbox"
+                value="cap"
+                checked={selectedAccessories.includes('cap')}
+                onChange={handleAccessoryChange}
+              />
+              <img src="/images/accessories/cap.png" alt="Cap" className="accessory-image" />
+            </label>
+          </div>
+          <button type="button" className="customize-button" onClick={handleSubmit}>
+            Add to cart
+          </button>
         </div>
-        <button type="button" className="customize-button" onClick={handleSubmit}>
-          Add to cart
-        </button>
       </div>
-    </div>
-    {selectedPokemon && (
-      <div className="evolution-section">
-        <h3>Evolve Your Pokémon!</h3>
-        <div className="evolution-options">
-          {evolutionChain.map((evolution, index) => (
-            <React.Fragment key={evolution}>
-              {index > 0 && (
-                <button
-                  type="button"
-                  className="evolution-separator"
-                  disabled
+      {selectedPokemon && (
+        <div className="evolution-section">
+          <h3 className="evolve-header">Evolve Your Pokémon!</h3>
+          <div className="evolution-options">
+            {evolutionChain.map((evolution, index) => (
+              <React.Fragment key={evolution}>
+                {index > 0 && (
+                  <button
+                    type="button"
+                    className="evolution-separator"
+                    disabled
+                  >
+                    →
+                  </button>
+                )}
+                <a
+                  href={evolution === name ? null : `/pokemon/${evolution}`}
+                  className={`evolution-button ${evolution === name ? 'selected' : ''}`}
+                  onClick={(e) => {
+                    if (evolution !== name) {
+                      e.preventDefault();
+                      handleEvolutionChange(evolution);
+                    }
+                  }}
                 >
-                  →
-                </button>
-              )}
-              <a
-                href={evolution === name ? null : `/pokemon/${evolution}`}
-                className={`evolution-button ${evolution === name ? 'selected' : ''}`}
-                onClick={(e) => {
-                  if (evolution !== name) {
-                    e.preventDefault();
-                    handleEvolutionChange(evolution);
-                  }
-                }}
-              >
-                <img src={`/images/pokemon/${evolution}.png`} alt={evolution} className="evolution-image" />
-                {evolution}
-              </a>
-            </React.Fragment>
-          ))}
+                  <img src={`/images/pokemon/${evolution}.png`} alt={evolution} className="evolution-image" />
+                  {evolution}
+                </a>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
+      )}
+      <div className="preview-section">
+        {message && <p className="message">{message}</p>}
       </div>
-    )}
-    <div className="preview-section">
-      {message && <p className="message">{message}</p>}
     </div>
-  </div>
-);
+  );
 };
 
 export default CustomizePokemon;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import './stuffedAnimalRanking.css';
 
-const stuffedAnimalRanking = () => {
+const StuffedAnimalRanking = () => {
   const [ranking, setRanking] = useState([]);
 
   useEffect(() => {
@@ -8,10 +9,9 @@ const stuffedAnimalRanking = () => {
       try {
         const response = await fetch('http://localhost:8080/PokemonRank');
         const data = await response.json();
-        
-        // Check if data.plushieRanking is defined before setting state
-        if (data && data.plushieRanking) {
-          setRanking(data.plushieRanking);
+
+        if (data && data.pokemonRanking) {
+          setRanking(data.pokemonRanking);
         } else {
           console.error('Error: No pokemon ranking data received.');
         }
@@ -19,18 +19,21 @@ const stuffedAnimalRanking = () => {
         console.error('Error fetching pokemon ranking:', error);
       }
     };
-    fetchRanking(); 
+    fetchRanking();
   }, []);
 
   return (
     <div className="stuffedAnimalRanking">
-      <h2>Plushie Ranking</h2>
       <div className="podium">
         {ranking.length > 0 ? (
-          ranking.slice(0, 3).map((item, index) => (
+          ranking.map((item, index) => (
             <div key={index} className={`podium-item podium-item-${index + 1}`}>
-              <h3>{item._id}</h3>
-              <p>Purchases: {item.count}</p>
+              <h3>{item.name}</h3>
+              <div>
+                <img src={item.isShiny ? item.shinyImage : item.image} alt={item.name} style={{ maxWidth: '200px' }} />
+              </div>
+              <p>Shiny: {item.isShiny ? 'Yes' : 'No'}</p>
+              <p>Purchases: {item.totalQuantity}</p>
             </div>
           ))
         ) : (
@@ -41,4 +44,5 @@ const stuffedAnimalRanking = () => {
   );
 };
 
-export default stuffedAnimalRanking;
+
+export default StuffedAnimalRanking;

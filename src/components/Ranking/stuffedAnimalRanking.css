@@ -1,0 +1,74 @@
+@import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+
+.stuffedAnimalRanking {
+  max-width: 100%;
+  overflow-x: auto;
+  background-size: cover; /* Ensure background covers entire element */
+  padding: 20px; /* Add padding for spacing */
+}
+
+.podium {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.podium-item {
+  flex: 0 0 auto;
+  max-width: 250px;
+  text-align: center;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.podium-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Adjust positions for podium items */
+.podium-item-1 {
+  transform: translateY(-20px); /* Raise the #1 item */
+  order: 2; /* #1 in the center */
+}
+
+.podium-item-2 {
+  transform: translateY(10px); /* Slightly raise the #2 item */
+  order: 1; /* #2 on the left */
+}
+
+.podium-item-3 {
+  order: 3; /* #3 on the right */
+}
+
+@media (max-width: 768px) {
+    .podium {
+      flex-wrap: nowrap; /* Ensure items don't wrap */
+      overflow-x: auto; /* Enable horizontal scrolling if necessary */
+      padding: 10px; /* Adjust padding for smaller screens */
+    }
+  
+    .podium-item {
+      flex: 0 0 auto;
+      max-width: 250px; /* Adjust the maximum width of each item */
+      margin-right: 20px; /* Add spacing between items */
+      transform: none; /* Reset any transforms */
+    }
+  
+    .podium-item-1 {
+      transform: translateY(-20px); /* Keep adjustments for #1 item if needed */
+    }
+  
+    .podium-item-2 {
+      transform: translateY(10px); /* Keep adjustments for #2 item if needed */
+    }
+  
+
+  }

@@ -21,6 +21,7 @@ const Profile = () => {
           Authorization: `Bearer ${token}`
         }
       });
+      console.log('Fetched purchases:', response.data); // Log the fetched purchases
       setPurchases(response.data); // Assuming response.data is an array of purchases
     } catch (error) {
       console.error('Error fetching purchases:', error);
@@ -29,21 +30,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const fetchPurchases = async () => {
-      try {
-        const token = cookies.token;
-        const response = await axios.get('http://localhost:8080/api/purchases', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setPurchases(response.data); // Assuming response.data is an array of purchases
-      } catch (error) {
-        console.error('Error fetching purchases:', error);
-        setPurchases([]); // Handle error by setting purchases to an empty array
-      }
-    };
-
     if (cookies.token) {
       fetchPurchases();
     }
@@ -61,18 +47,33 @@ const Profile = () => {
         {purchases.length > 0 ? (
           <ul className="purchase-list">
             {purchases.map((purchase) => (
-              <li key={purchase._id} className="purchase-item">
-                <img src={purchase.image} alt="Pokemon" className="purchase-image" />
-                <div className="purchase-details">
-                  <p>{purchase.name}</p>
-                  <p>Quantity: {purchase.quantity}</p>
-                  <div className="accessories">
-                    {purchase.items.map((item, index) => (
-                      <img key={index} src={item.image} alt={item.name} className="accessory-image" />
-                    ))}
+              purchase.items.map((item) => (
+                <li key={item._id} className="purchase-item">
+                  <img 
+                    src={item.isShiny ? item.shinyImage : item.image} 
+                    alt="Pokemon" 
+                    className="purchase-image" 
+                    onError={(e) => { e.target.src = defaultProfilePicture; }} // Fallback to default image on error
+                  />
+                  <div className="purchase-details">
+                    <p>{item.name}</p>
+                    <p>Quantity: {item.quantity}</p>
+                    {item.accessories && item.accessories.length > 0 && (
+                      <div className="accessories">
+                        {item.accessories.map((accessory, index) => (
+                          <img 
+                            key={index} 
+                            src={accessory.image} 
+                            alt={accessory.name} 
+                            className="accessory-image" 
+                            onError={(e) => { e.target.src = defaultProfilePicture; }} // Fallback to default image on error
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              </li>
+                </li>
+              ))
             ))}
           </ul>
         ) : (

@@ -43,7 +43,7 @@ const LandingPage = () => {
           <StuffedanimalRanking />
         </div>
         <div className="pokemon-gallery-title">
-          <h2>Pokemon Plushes</h2>
+          <h2 className = "pokemon-plushes">Pokemon Plushes</h2>
         </div>
         <div className="pokemon-gallery">
           {pokemons.map(pokemon => (

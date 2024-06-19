@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+
 .bg-gray-200 {
   background-color: #f3f4f6; /* Light gray background */
   min-height: 100vh;
@@ -26,13 +28,33 @@
 }
 
 .welcome-text {
+  font-family: 'Pokemon Solid', sans-serif;
   font-size: 24px;
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: #f3f4f6; /* Light gray background */
   padding: 10px; /* Add padding to create separation */
   border-radius: 8px; /* Rounded corners */
+  
+  /* Yellow text with solid blue border */
+  color: #fbbf24; /* Yellow */
+  -webkit-text-stroke: 1px rgba(59, 76, 202, 1); /* Solid blue border */
 }
+
+.pokemon-plushes {
+  font-family: 'Pokemon Solid', sans-serif;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f3f4f6; /* Light gray background */
+  padding: 10px; /* Add padding to create separation */
+  border-radius: 8px; /* Rounded corners */
+  
+  /* Yellow text with solid blue border */
+  color: #fbbf24; /* Yellow */
+  -webkit-text-stroke: 1px rgba(59, 76, 202, 1); /* Solid blue border */
+}
+
 
 .customize-button {
   background-color: #fbbf24;
@@ -53,16 +75,19 @@
 
 .ranking-container {
   background-color: #e3350d; /* Red color similar to a pokeball */
-  padding: 20px;
+  padding: 15px;
   margin-bottom: 20px; /* Space between ranking and pokemon gallery */
   border-radius: 8px; /* Rounded corners */
 }
 
 .pokemon-rank-text {
-  font-size: 20px;
-  color: white;
+  font-family: 'Pokemon Solid', sans-serif;
+  font-size: 40
+px;
+  color: #fbbf24; /* Yellow */
+  -webkit-text-stroke: 1px rgba(59, 76, 202, 1); /* Solid blue border */
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .pokemon-gallery-title {
@@ -96,6 +121,13 @@
     padding: 10px 20px;
   }
 
+  .ranking-container {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .pokemon-rank-text {
+    font-size: 24px; /* Adjust font size for smaller screens */
+  }
   .pokemon-gallery {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust grid for smaller screens */
   }
